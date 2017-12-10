@@ -15,8 +15,8 @@
       <file leaf-file-name="Main.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/Main.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="14129">
-              <caret line="863" column="22" lean-forward="false" selection-start-line="863" selection-start-column="22" selection-end-line="863" selection-end-column="22" />
+            <state relative-caret-position="100">
+              <caret line="91" column="32" lean-forward="false" selection-start-line="91" selection-start-column="32" selection-end-line="91" selection-end-column="32" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -24,11 +24,21 @@
           </provider>
         </entry>
       </file>
+      <file leaf-file-name="mainBDMaria.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/../../mainBDMaria.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-40923">
+              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file leaf-file-name="RMIServer_BD.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/../../../Material (anos anteriores)/Projeto iBei/BD_iBei_2014226191_2014198255/java_code/RMIServer_BD.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="225">
-              <caret line="222" column="140" lean-forward="false" selection-start-line="222" selection-start-column="100" selection-end-line="222" selection-end-column="140" />
+            <state relative-caret-position="250">
+              <caret line="199" column="22" lean-forward="true" selection-start-line="198" selection-start-column="12" selection-end-line="199" selection-end-column="22" />
               <folding />
             </state>
           </provider>
@@ -37,8 +47,8 @@
       <file leaf-file-name="Data.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Data.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="4600">
-              <caret line="184" column="5" lean-forward="false" selection-start-line="184" selection-start-column="5" selection-end-line="184" selection-end-column="5" />
+            <state relative-caret-position="350">
+              <caret line="14" column="49" lean-forward="false" selection-start-line="14" selection-start-column="49" selection-end-line="14" selection-end-column="49" />
               <folding />
             </state>
           </provider>
@@ -57,6 +67,10 @@
     <findStrings>
       <find>PASS</find>
       <find>Ocorreu um erro ao procurar a mesa de voto da eleição</find>
+      <find>Não existem listas candidatas a esta eleição em que possa votar</find>
+      <find>Já votou nesta eleição</find>
+      <find>Ocorreu um erro ao criar uma Mesa_Voto_Pessoa</find>
+      <find>Ocorreu um erro ao procurar o nº de votos nulos da eleição</find>
     </findStrings>
   </component>
   <component name="GradleLocalSettings">
@@ -68,8 +82,8 @@
     <option name="CHANGED_PATHS">
       <list>
         <option value="$PROJECT_DIR$/../mainBD.java" />
-        <option value="$PROJECT_DIR$/src/Data.java" />
         <option value="$PROJECT_DIR$/../../../Material (anos anteriores)/Projeto iBei/BD_iBei_2014226191_2014198255/java_code/RMIServer_BD.java" />
+        <option value="$PROJECT_DIR$/src/Data.java" />
         <option value="$PROJECT_DIR$/src/Main.java" />
       </list>
     </option>
@@ -96,7 +110,7 @@
     <panes />
   </component>
   <component name="PropertiesComponent">
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../mainBDMaria.java" />
     <property name="settings.editor.selected.configurable" value="preferences.lookFeel" />
     <property name="project.structure.last.edited" value="Project" />
     <property name="project.structure.proportion" value="0.0" />
@@ -365,24 +379,32 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/../../../Material (anos anteriores)/Projeto iBei/BD_iBei_2014226191_2014198255/java_code/RMIServer_BD.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="225">
-          <caret line="222" column="140" lean-forward="false" selection-start-line="222" selection-start-column="100" selection-end-line="222" selection-end-column="140" />
+        <state relative-caret-position="250">
+          <caret line="199" column="22" lean-forward="true" selection-start-line="198" selection-start-column="12" selection-end-line="199" selection-end-column="22" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../mainBDMaria.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-40923">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Data.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="4600">
-          <caret line="184" column="5" lean-forward="false" selection-start-line="184" selection-start-column="5" selection-end-line="184" selection-end-column="5" />
+        <state relative-caret-position="350">
+          <caret line="14" column="49" lean-forward="false" selection-start-line="14" selection-start-column="49" selection-end-line="14" selection-end-column="49" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Main.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="14129">
-          <caret line="863" column="22" lean-forward="false" selection-start-line="863" selection-start-column="22" selection-end-line="863" selection-end-column="22" />
+        <state relative-caret-position="100">
+          <caret line="91" column="32" lean-forward="false" selection-start-line="91" selection-start-column="32" selection-end-line="91" selection-end-column="32" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>

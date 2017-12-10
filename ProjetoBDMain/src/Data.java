@@ -13,7 +13,7 @@ public class Data {
         this.mes = calendario.get(Calendar.MONTH);
         this.setMes(this.getMes()+1);
         this.ano = calendario.get(Calendar.YEAR);
-        this.horas = calendario.get(Calendar.HOUR);
+        this.horas = calendario.get(Calendar.HOUR_OF_DAY);
         this.minutos = calendario.get(Calendar.MINUTE);
     }
 

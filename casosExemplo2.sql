@@ -1,19 +1,19 @@
 /*Inserir em ELEICAO: título, descrição, data início, data fim, votos nulos, votos em branco, abstenções, tipo, id, UO nome*/
 insert into ELEICAO
-    values('Eleicao 1', 'Uma pequena eleicao 1', TO_DATE('9-12-2017 10:30','DD-MM-YYYY HH24:MI'), TO_DATE('11-12-2017 18:30','DD-MM-YYYY HH24:MI'), 0, 0, 0, 'Nucleo', 1, (select nome from UNIDADEORGANICA where nome = 'DEI'));
-
-insert into ELEICAO
-    values('Eleicao 2', 'Uma pequena eleicao 2', TO_DATE('23-2-2018 10:30','DD-MM-YYYY HH24:MI'), TO_DATE('16-2-2018 18:30','DD-MM-YYYY HH24:MI'), 0, 0, 0, 'Conselho Geral', 2, (select nome from UNIDADEORGANICA where nome = 'FCTUC'));
+    values('Eleicao de Conselho Geral II', 'Uma pequena eleicao 5', TO_DATE('9-12-2017 08:30','DD-MM-YYYY HH24:MI'), TO_DATE('10-12-2017 21:45','DD-MM-YYYY HH24:MI'), 0, 0, 0, 'Conselho Geral', 5, (select nome from UNIDADEORGANICA where nome = 'DEI'));
 
 /*Inserir em LISTA: nº votos, nome lista, id eleição, tipo lista*/
 insert into LISTA
-    values(0, 'Lista A', (select id from ELEICAO where id = '1'), 'Aluno');
-
-insert into LISTA
-    values(0, 'Lista B', (select id from ELEICAO where id = '1'), 'Aluno');
+    values(0, 'Lista G', (select id from ELEICAO where id = '5'), 'Aluno');
     
 insert into LISTA
-    values(0, 'Lista C', (select id from ELEICAO where id = '2'), 'Aluno');
+    values(0, 'Lista H', (select id from ELEICAO where id = '5'), 'Professor');
     
-insert into LISTA
-    values(0, 'Lista D', (select id from ELEICAO where id = '2'), 'Professor');
+/*Inserir em MESA_VOTO: UO nome, id*/
+insert into MESA_VOTO
+    values((select nome from UNIDADEORGANICA where nome = 'DEI'), 5);
+    
+/*Inserir em MESA_VOTO_ELEICAO: Mesa_Voto UO nome, Mesa_Voto id, Eleicao id*/
+insert into MESA_VOTO_ELEICAO
+    values((select UONome from MESA_VOTO where UONome = (select nome from UNIDADEORGANICA where nome = 'DEI' and id = 5)), (select id from MESA_VOTO where id = 5), (select id from ELEICAO where id = 5));
+    

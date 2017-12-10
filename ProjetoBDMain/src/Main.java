@@ -1,66 +1,12 @@
 import java.sql.*;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.*;
 
 public class Main {
     public static void main(String[] args) {
-        /*
-        try{
-            Class.forName("oracle.jdbc.driver.OracleDriver");
-
-        }catch(ClassNotFoundException e){
-            System.out.println("O driver não foi encontrado, verificar se este existe.");
-            e.printStackTrace();
-
-        }
-        System.out.println("O JDBC Driver funciona ... a tentar efectuar uma ligacao");
-        Connection conexao = null;
-        try {
-            conexao = DriverManager.getConnection(
-                    "jdbc:oracle:thin:@localhost:1521:xe",
-                    "utilizadorBD",
-                    "utilizadorBD");
-        } catch (SQLException e) {
-            System.out.println("A ligação falhou");
-            e.printStackTrace();
-            return;
-        }
-
-        if (conexao!=null){
-            System.out.println("A ligação à base de dados foi efectuada com sucesso");
-        }
-        else{
-            System.out.println("Não foi possível estabelecer ligação com a base de dados");
-        }
-
-        try{
-            Statement stmt;
-            if (conexao.createStatement() == null){
-                conexao = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:xe",
-                        "utilizadorBD",
-                        "utilizadorBD");
-            }
-            if ((stmt = conexao.createStatement()) == null){
-                System.out.println("Não foi possível criar um statement");
-                System.exit(-1);
-            }
-
-            String query = "SELECT * FROM PESSOA";
-            System.out.println("Processando a query: " + query);
-            ResultSet resultado = stmt.executeQuery(query);
-
-            ResultSetMetaData rsmd = resultado.getMetaData();
-
-        } catch (SQLException e){
-            e.printStackTrace();
-        }
-        */
-
         // Chamar menu da consola de administração:
-        //menuConsola();
+        menuConsola();
         // Chamar menu da mesa de voto
-        menuMesa();
+        //menuMesa();
     }
 
     /*Função de menu: Função aproveitada da meta 1 do projeto de SD*/
@@ -81,7 +27,7 @@ public class Main {
         System.out.println("11 - Sair da aplicação");
 
         while (!opcao.equalsIgnoreCase("1") && !opcao.equalsIgnoreCase("2") && !opcao.equalsIgnoreCase("3") && !opcao.equalsIgnoreCase("4") && !opcao.equalsIgnoreCase("5") && !opcao.equalsIgnoreCase("6") && !opcao.equalsIgnoreCase("7") && !opcao.equalsIgnoreCase("8") && !opcao.equalsIgnoreCase("9") && !opcao.equalsIgnoreCase("10") && !opcao.equalsIgnoreCase("11")) {
-            System.out.println("Opcao desejada: ");
+            System.out.print("Opcao desejada: ");
             Scanner sc = new Scanner(System.in);
             opcao = sc.nextLine();
             opcao = opcao.trim();
@@ -118,7 +64,7 @@ public class Main {
         }
         else if (opcao.equalsIgnoreCase("7")) {
             System.out.println("Chamou consultar detalhes de eleicões passadas.\n");
-            //chamarConsultarDetalhesDeEleicoesPassadas();
+            chamarConsultarDetalhesDeEleicoesPassadas();
             menuConsola();
         }
         else if (opcao.equalsIgnoreCase("8")) {
@@ -140,6 +86,152 @@ public class Main {
             System.out.println("Chamada para desligar a aplicação.\n");
             System.exit(0);
         }
+    }
+
+    public static void chamarConsultarDetalhesDeEleicoesPassadas() {
+        Data agora = new Data();
+        String d = formataData(agora);
+
+        HashMap<Integer,String> eleicoesFechadas = listaEleicoesFechadas(d);
+
+        if(eleicoesFechadas != null) {
+            if(eleicoesFechadas.isEmpty()) {
+                System.out.println("Neste momento não há eleições fechadas.");
+                return ;
+            }
+            else {
+                System.out.println("======== LISTA DE ELEIÇÕES  ========");
+                int i = 1;
+                while(i <= eleicoesFechadas.size()) {
+                    System.out.println(i + " - " + eleicoesFechadas.get(i));
+                    i++;
+                }
+                System.out.println("Introduza o nº correspondente à eleição que deseja consultar");
+                int op = 0;
+                do {
+                    System.out.print("Opção: ");
+                    try {
+                        Scanner sc = new Scanner(System.in);
+                        op = sc.nextInt();
+                    } catch(InputMismatchException e){
+                        System.out.println("Introduza um inteiro");
+                    }
+                } while(op < 1 || op > eleicoesFechadas.size());
+
+                String tituloEleicao = eleicoesFechadas.get(op);
+                if(consultarDetalhesEleicao(tituloEleicao))
+                    System.out.println("Os detalhes da eleição foram consultados com sucesso.");
+                else
+                    System.out.println("Não foi possível consultar os detalhes da eleição.");
+            }
+        }
+    }
+
+    public static HashMap<Integer,String> listaEleicoesFechadas(String agora) {
+        HashMap<Integer,String> elFechadas = new HashMap<>();
+
+        Connection conexao = null;
+        try {
+            conexao = DriverManager.getConnection(
+                    "jdbc:oracle:thin:@localhost:1521:xe",
+                    "utilizadorBD",
+                    "utilizadorBD");
+        } catch (SQLException e) {
+            System.out.println("Erro! A ligação falhou.");
+            e.printStackTrace();
+            return null;
+        }
+
+        if (conexao != null) {
+            System.out.println("A ligação à base de dados foi efectuada com sucesso.");
+        }
+        else {
+            System.out.println("Não foi possível estabelecer ligação com a base de dados.");
+        }
+
+        String query = "SELECT TITULO FROM ELEICAO " +
+                        "WHERE DATAFIM < TO_TIMESTAMP(?, 'YYYY-MM-DD HH24:MI:SS') ";
+
+        try(PreparedStatement ps = conexao.prepareStatement(query)) {
+            ps.setString(1, agora);
+
+            int i = 1;
+            ResultSet rs = ps.executeQuery();
+            while(rs.next()) {
+                elFechadas.put(i, rs.getString("TITULO"));
+                i++;
+            }
+
+            return elFechadas;
+
+        } catch (SQLException e) {
+            System.out.println("Ocorreu um erro ao procurar as eleições fechadas.\n" + e);
+            return null;
+        }
+    }
+
+    public static boolean consultarDetalhesEleicao(String tituloEleicao) {
+        int numVotosBranco, numVotosNulos;
+        HashMap<String,Integer> listasEleicao = new HashMap<>();
+
+        Connection conexao = null;
+        try {
+            conexao = DriverManager.getConnection(
+                    "jdbc:oracle:thin:@localhost:1521:xe",
+                    "utilizadorBD",
+                    "utilizadorBD");
+        } catch (SQLException e) {
+            System.out.println("Erro! A ligação falhou.");
+            e.printStackTrace();
+            return false;
+        }
+
+        if (conexao != null) {
+            System.out.println("A ligação à base de dados foi efectuada com sucesso.");
+        }
+        else {
+            System.out.println("Não foi possível estabelecer ligação com a base de dados.");
+        }
+
+        String query = "SELECT VOTOSBRANCO , VOTOSNULOS FROM ELEICAO " +
+                        "WHERE TITULO = ? ";
+
+        try(PreparedStatement ps = conexao.prepareStatement(query)) {
+            ps.setString(1, tituloEleicao);
+
+            ResultSet rs = ps.executeQuery();
+            rs.next();
+
+            numVotosBranco = rs.getInt("VOTOSBRANCO");
+            numVotosNulos = rs.getInt("VOTOSNULOS");
+
+        } catch (SQLException e) {
+            System.out.println("Ocorreu um erro ao procurar o nº de votos em branco e nulos da eleição.\n" + e);
+            return false;
+        }
+
+        query = "SELECT NOMELISTA , NUM_VOTOS FROM LISTA " +
+                         "WHERE ELEICAOID in (SELECT ID FROM ELEICAO WHERE TITULO = ? )";
+
+        try(PreparedStatement ps = conexao.prepareStatement(query)) {
+            ps.setString(1, tituloEleicao);
+
+            ResultSet rs = ps.executeQuery();
+            while(rs.next()) {
+                listasEleicao.put(rs.getString("NOMELISTA"), rs.getInt("NUM_VOTOS"));
+            }
+
+        } catch (SQLException e) {
+            System.out.println("Ocorreu um erro ao procurar o nº de votos das listas candidatas.\n" + e);
+            return false;
+        }
+
+        System.out.println("========== DETALHES DA ELEIÇÃO ==========");
+        System.out.println("Votos em branco: " + numVotosBranco);
+        System.out.println("Votos nulos: " + numVotosNulos);
+        System.out.println(listasEleicao);
+
+        return true;
     }
 
     /*Função de menu: Função aproveitada da meta 1 do projeto de SD*/
@@ -295,28 +387,27 @@ public class Main {
         else System.out.println("O seu voto não foi registado.");
     }
 
-    public static boolean votar(int numCC) {
-        Data agora = new Data();
+    public static String formataData(Data agora) {
         String d = ""; // Formato data: 'YYYY-MM-DD HH24:MI:SS'
 
         if(agora.getMes() < 10) {
             if(agora.getDia() < 10) {
-                 if(agora.getHoras() < 10) {
-                     if(agora.getMinutos() < 10) {
-                         d = agora.getAno() + "-0" + agora.getMes() + "-0" + agora.getDia() + " 0" + agora.getHoras() + ":0" + agora.getMinutos() + ":00";
-                     }
-                     else {
-                         d = agora.getAno() + "-0" + agora.getMes() + "-0" + agora.getDia() + " 0" + agora.getHoras() + ":" + agora.getMinutos() + ":00";
-                     }
-                 }
-                 else {
-                     if(agora.getMinutos() < 10) {
-                         d = agora.getAno() + "-0" + agora.getMes() + "-0" + agora.getDia() + " " + agora.getHoras() + ":0" + agora.getMinutos() + ":00";
-                     }
-                     else {
-                         d = agora.getAno() + "-0" + agora.getMes() + "-0" + agora.getDia() + " " + agora.getHoras() + ":" + agora.getMinutos() + ":00";
-                     }
-                 }
+                if(agora.getHoras() < 10) {
+                    if(agora.getMinutos() < 10) {
+                        d = agora.getAno() + "-0" + agora.getMes() + "-0" + agora.getDia() + " 0" + agora.getHoras() + ":0" + agora.getMinutos() + ":00";
+                    }
+                    else {
+                        d = agora.getAno() + "-0" + agora.getMes() + "-0" + agora.getDia() + " 0" + agora.getHoras() + ":" + agora.getMinutos() + ":00";
+                    }
+                }
+                else {
+                    if(agora.getMinutos() < 10) {
+                        d = agora.getAno() + "-0" + agora.getMes() + "-0" + agora.getDia() + " " + agora.getHoras() + ":0" + agora.getMinutos() + ":00";
+                    }
+                    else {
+                        d = agora.getAno() + "-0" + agora.getMes() + "-0" + agora.getDia() + " " + agora.getHoras() + ":" + agora.getMinutos() + ":00";
+                    }
+                }
             }
             else {
                 if(agora.getHoras() < 10) {
@@ -376,6 +467,13 @@ public class Main {
             }
         }
 
+        return d;
+    }
+
+    public static boolean votar(int numCC) {
+        Data agora = new Data();
+        String d = formataData(agora);
+
         HashMap<Integer,String> eleicoesAbertas = listaEleicoesAbertas(d);
 
         if(eleicoesAbertas != null) {
@@ -384,7 +482,7 @@ public class Main {
                 return false;
             }
             else{
-                System.out.println("======== LISTA DE ELEICOES  ========");
+                System.out.println("======== LISTA DE ELEIÇÕES  ========");
                 int i = 1;
                 while(i <= eleicoesAbertas.size()) {
                     System.out.println(i + " - " + eleicoesAbertas.get(i));
@@ -406,11 +504,17 @@ public class Main {
                     return false;
                 }
                 else {
-                    HashMap<Integer,String> opcoesParaVotar = listaOpcoesParaVotar(eleicoesAbertas.get(op));
+                    String tituloEleicao = eleicoesAbertas.get(op);
+                    String tipoEleicao = getInfoEleicao(tituloEleicao)[0];
+                    String nomeUOEleicao = getInfoEleicao(tituloEleicao)[1];
+                    String tipoPessoa = getInfoPessoa(numCC)[0];
+                    String nomeUOPessoa = getInfoPessoa(numCC)[1];
+
+                    HashMap<Integer,String> opcoesParaVotar = listaOpcoesParaVotar(tituloEleicao, tipoEleicao, nomeUOEleicao, tipoPessoa, nomeUOPessoa);
 
                     if(opcoesParaVotar != null) {
                         if(opcoesParaVotar.isEmpty()) {
-                            System.out.println("Não existem listas candidatas a esta eleição em que possa votar");
+                            System.out.println("Não existem listas candidatas a esta eleição em que possa votar.");
                             return false;
                         }
                         else {
@@ -550,8 +654,8 @@ public class Main {
         }
     }
 
-    public static HashMap<Integer,String> listaOpcoesParaVotar(String tituloEleicao) {
-        HashMap<Integer,String> opVotar = new HashMap<>();
+    public static String [] getInfoEleicao(String tituloEleicao) {
+        String infoEleicao [] = {"",""};
 
         Connection conexao = null;
         try {
@@ -572,27 +676,258 @@ public class Main {
             System.out.println("Não foi possível estabelecer ligação com a base de dados.");
         }
 
-        String query = "SELECT NOMELISTA FROM LISTA " +
-                        "WHERE ELEICAOID in (SELECT ID FROM ELEICAO WHERE TITULO = ? )";
+        String query = "SELECT TIPO , UNIDADEORGANICANOME FROM ELEICAO " +
+                        "WHERE TITULO = ? ";
 
         try(PreparedStatement ps = conexao.prepareStatement(query)) {
             ps.setString(1, tituloEleicao);
 
-            int i = 1;
             ResultSet rs = ps.executeQuery();
-            while(rs.next()) {
-                opVotar.put(i, rs.getString("NOMELISTA"));
-                i++;
-            }
-            opVotar.put(i, "Voto em branco");
-            i++;
-            opVotar.put(i, "Voto nulo");
+            rs.next();
 
-            return opVotar;
+            infoEleicao[0] = rs.getString("TIPO");
+            infoEleicao[1] = rs.getString("UNIDADEORGANICANOME");
+
+            return infoEleicao;
 
         } catch (SQLException e) {
-            System.out.println("Ocorreu um erro ao procurar as listas candidatas da eleição.\n" + e);
+            System.out.println("Ocorreu um erro ao procurar o tipo e unidade orgânica da eleição.\n" + e);
             return null;
+        }
+    }
+
+    public static String [] getInfoPessoa(int numCC) {
+        String infoPessoa [] = {"",""};
+
+        Connection conexao = null;
+        try {
+            conexao = DriverManager.getConnection(
+                    "jdbc:oracle:thin:@localhost:1521:xe",
+                    "utilizadorBD",
+                    "utilizadorBD");
+        } catch (SQLException e) {
+            System.out.println("Erro! A ligação falhou.");
+            e.printStackTrace();
+            return null;
+        }
+
+        if (conexao != null) {
+            System.out.println("A ligação à base de dados foi efectuada com sucesso.");
+        }
+        else {
+            System.out.println("Não foi possível estabelecer ligação com a base de dados.");
+        }
+
+        String query = "SELECT TIPO , UNIDADEORGANICANOME FROM PESSOA " +
+                        "WHERE NUMCC = ? ";
+
+        try(PreparedStatement ps = conexao.prepareStatement(query)) {
+            ps.setInt(1, numCC);
+
+            ResultSet rs = ps.executeQuery();
+            rs.next();
+
+            infoPessoa[0] = rs.getString("TIPO");
+            infoPessoa[1] = rs.getString("UNIDADEORGANICANOME");
+
+            return infoPessoa;
+
+        } catch (SQLException e) {
+            System.out.println("Ocorreu um erro ao procurar o tipo e unidade orgânica do eleitor.\n" + e);
+            return null;
+        }
+    }
+
+    public static HashMap<Integer,String> listaOpcoesParaVotar(String tituloEleicao, String tipoEleicao, String nomeUOEleicao, String tipoPessoa, String nomeUOPessoa) {
+        HashMap<Integer,String> opVotar = new HashMap<>();
+
+        if(tipoEleicao.equalsIgnoreCase("Nucleo")) {
+            if(tipoPessoa.equalsIgnoreCase("Aluno") && nomeUOPessoa.equalsIgnoreCase(nomeUOEleicao)) {
+                Connection conexao = null;
+                try {
+                    conexao = DriverManager.getConnection(
+                            "jdbc:oracle:thin:@localhost:1521:xe",
+                            "utilizadorBD",
+                            "utilizadorBD");
+                } catch (SQLException e) {
+                    System.out.println("Erro! A ligação falhou.");
+                    e.printStackTrace();
+                    return null;
+                }
+
+                if (conexao != null) {
+                    System.out.println("A ligação à base de dados foi efectuada com sucesso.");
+                }
+                else {
+                    System.out.println("Não foi possível estabelecer ligação com a base de dados.");
+                }
+
+                String query = "SELECT NOMELISTA FROM LISTA " +
+                        "WHERE ELEICAOID in (SELECT ID FROM ELEICAO WHERE TITULO = ? )";
+
+                try(PreparedStatement ps = conexao.prepareStatement(query)) {
+                    ps.setString(1, tituloEleicao);
+
+                    int i = 1;
+                    ResultSet rs = ps.executeQuery();
+                    while(rs.next()) {
+                        opVotar.put(i, rs.getString("NOMELISTA"));
+                        i++;
+                    }
+                    if(i != 1){
+                        opVotar.put(i, "Voto em branco");
+                        i++;
+                        opVotar.put(i, "Voto nulo");
+                    }
+
+                    return opVotar;
+
+                } catch (SQLException e) {
+                    System.out.println("Ocorreu um erro ao procurar as listas candidatas da eleição.\n" + e);
+                    return null;
+                }
+            }
+            else System.out.println("Não pode votar nesta eleição.");
+        }
+        else if(tipoEleicao.equalsIgnoreCase("Conselho Geral")) {
+            Connection conexao = null;
+            try {
+                conexao = DriverManager.getConnection(
+                        "jdbc:oracle:thin:@localhost:1521:xe",
+                        "utilizadorBD",
+                        "utilizadorBD");
+            } catch (SQLException e) {
+                System.out.println("Erro! A ligação falhou.");
+                e.printStackTrace();
+                return null;
+            }
+
+            if (conexao != null) {
+                System.out.println("A ligação à base de dados foi efectuada com sucesso.");
+            }
+            else {
+                System.out.println("Não foi possível estabelecer ligação com a base de dados.");
+            }
+
+            String query = "SELECT NOMELISTA FROM LISTA " +
+                    "WHERE ELEICAOID in (SELECT ID FROM ELEICAO WHERE TITULO = ? )";
+
+            try(PreparedStatement ps = conexao.prepareStatement(query)) {
+                ps.setString(1, tituloEleicao);
+
+                int i = 1;
+                ResultSet rs = ps.executeQuery();
+                while(rs.next()) {
+                    if(verificaTipoLista(rs.getString("NOMELISTA"), tipoPessoa)) {
+                        opVotar.put(i, rs.getString("NOMELISTA"));
+                        i++;
+                    }
+                }
+                if(i != 1){
+                    opVotar.put(i, "Voto em branco");
+                    i++;
+                    opVotar.put(i, "Voto nulo");
+                }
+
+                return opVotar;
+
+            } catch (SQLException e) {
+                System.out.println("Ocorreu um erro ao procurar as listas candidatas da eleição.\n" + e);
+                return null;
+            }
+        }
+        else {
+            if(tipoPessoa.equalsIgnoreCase("Professor") && nomeUOPessoa.equalsIgnoreCase(nomeUOEleicao)) {
+                Connection conexao = null;
+                try {
+                    conexao = DriverManager.getConnection(
+                            "jdbc:oracle:thin:@localhost:1521:xe",
+                            "utilizadorBD",
+                            "utilizadorBD");
+                } catch (SQLException e) {
+                    System.out.println("Erro! A ligação falhou.");
+                    e.printStackTrace();
+                    return null;
+                }
+
+                if (conexao != null) {
+                    System.out.println("A ligação à base de dados foi efectuada com sucesso.");
+                }
+                else {
+                    System.out.println("Não foi possível estabelecer ligação com a base de dados.");
+                }
+
+                String query = "SELECT NOMELISTA FROM LISTA " +
+                        "WHERE ELEICAOID in (SELECT ID FROM ELEICAO WHERE TITULO = ? )";
+
+                try(PreparedStatement ps = conexao.prepareStatement(query)) {
+                    ps.setString(1, tituloEleicao);
+
+                    int i = 1;
+                    ResultSet rs = ps.executeQuery();
+                    while(rs.next()) {
+                        opVotar.put(i, rs.getString("NOMELISTA"));
+                        i++;
+                    }
+                    if(i != 1){
+                        opVotar.put(i, "Voto em branco");
+                        i++;
+                        opVotar.put(i, "Voto nulo");
+                    }
+
+                    return opVotar;
+
+                } catch (SQLException e) {
+                    System.out.println("Ocorreu um erro ao procurar as listas candidatas da eleição.\n" + e);
+                    return null;
+                }
+            }
+            else System.out.println("Não pode votar nesta eleição.");
+        }
+
+        return opVotar;
+    }
+
+    public static boolean verificaTipoLista(String nomeLista, String tipoPessoa) {
+        String tipoLista = "";
+
+        Connection conexao = null;
+        try {
+            conexao = DriverManager.getConnection(
+                    "jdbc:oracle:thin:@localhost:1521:xe",
+                    "utilizadorBD",
+                    "utilizadorBD");
+        } catch (SQLException e) {
+            System.out.println("Erro! A ligação falhou.");
+            e.printStackTrace();
+            return false;
+        }
+
+        if (conexao != null) {
+            System.out.println("A ligação à base de dados foi efectuada com sucesso.");
+        }
+        else {
+            System.out.println("Não foi possível estabelecer ligação com a base de dados.");
+        }
+
+        String query = "SELECT TIPOLISTA FROM LISTA " +
+                        "WHERE NOMELISTA = ? ";
+
+        try(PreparedStatement ps = conexao.prepareStatement(query)) {
+            ps.setString(1, nomeLista);
+
+            ResultSet rs = ps.executeQuery();
+            rs.next();
+
+            tipoLista = rs.getString("TIPOLISTA");
+            if(tipoLista.equalsIgnoreCase(tipoPessoa))
+                return true;
+            else
+                return false;
+
+        } catch (SQLException e) {
+            System.out.println("Ocorreu um erro ao procurar o tipo da lista candidata.\n" + e);
+            return false;
         }
     }
 
@@ -689,16 +1024,17 @@ public class Main {
             }
 
             query = "INSERT INTO MESA_VOTO_PESSOA(Mesa_VotoUONome, Mesa_VotoID, PessoaNumCC, PessoaUnidadeOrganicaNome, votarOuAssociar, dataVoto)"
-                    + "VALUES ((SELECT UONome FROM MESA_VOTO WHERE UONome = ? ), (SELECT ID FROM MESA_VOTO WHERE ID = ? ), (SELECT NumCC FROM PESSOA WHERE NumCC = ? ), (SELECT Nome FROM UNIDADEORGANICA WHERE Nome = ? ), ? , TO_TIMESTAMP(?, 'YYYY/MM/DD HH24:MI:SS'))";
+                    + "VALUES ((SELECT UONome FROM MESA_VOTO WHERE UONome = ? and ID = ? ), (SELECT ID FROM MESA_VOTO WHERE ID = ? ), (SELECT NumCC FROM PESSOA WHERE NumCC = ? ), (SELECT Nome FROM UNIDADEORGANICA WHERE Nome = ? ), ? , TO_TIMESTAMP(?, 'YYYY/MM/DD HH24:MI:SS'))";
 
             int votarOuAssociar = 1; // 1 - Votar, 2 - Associar
             try(PreparedStatement ps = conexao.prepareStatement(query)) {
                 ps.setString(1, nomeUOMesa);
                 ps.setInt(2, idMesa);
-                ps.setInt(3, numCC);
-                ps.setString(4, nomeUOPessoa);
-                ps.setInt(5, votarOuAssociar);
-                ps.setString(6, agora);
+                ps.setInt(3, idMesa);
+                ps.setInt(4, numCC);
+                ps.setString(5, nomeUOPessoa);
+                ps.setInt(6, votarOuAssociar);
+                ps.setString(7, agora);
 
                 ps.executeUpdate();
                 conexao.commit();
@@ -729,7 +1065,7 @@ public class Main {
                 System.out.println("Não foi possível estabelecer ligação com a base de dados.");
             }
 
-            String query = "SELECT VOTOSNULO FROM ELEICAO " +
+            String query = "SELECT VOTOSNULOS FROM ELEICAO " +
                             "WHERE TITULO = ?";
 
             int numVotosNulos;
@@ -800,16 +1136,17 @@ public class Main {
             }
 
             query = "INSERT INTO MESA_VOTO_PESSOA(Mesa_VotoUONome, Mesa_VotoID, PessoaNumCC, PessoaUnidadeOrganicaNome, votarOuAssociar, dataVoto)"
-                    + "VALUES ((SELECT UONome FROM MESA_VOTO WHERE UONome = ? ), (SELECT ID FROM MESA_VOTO WHERE ID = ? ), (SELECT NumCC FROM PESSOA WHERE NumCC = ? ), (SELECT Nome FROM UNIDADEORGANICA WHERE Nome = ? ), ? , TO_TIMESTAMP(?, 'YYYY/MM/DD HH24:MI:SS'))";
+                    + "VALUES ((SELECT UONome FROM MESA_VOTO WHERE UONome = ? and ID = ? ), (SELECT ID FROM MESA_VOTO WHERE ID = ? ), (SELECT NumCC FROM PESSOA WHERE NumCC = ? ), (SELECT Nome FROM UNIDADEORGANICA WHERE Nome = ? ), ? , TO_TIMESTAMP(?, 'YYYY/MM/DD HH24:MI:SS'))";
 
             int votarOuAssociar = 1; // 1 - Votar, 2 - Associar
             try(PreparedStatement ps = conexao.prepareStatement(query)) {
                 ps.setString(1, nomeUOMesa);
                 ps.setInt(2, idMesa);
-                ps.setInt(3, numCC);
-                ps.setString(4, nomeUOPessoa);
-                ps.setInt(5, votarOuAssociar);
-                ps.setString(6, agora);
+                ps.setInt(3, idMesa);
+                ps.setInt(4, numCC);
+                ps.setString(5, nomeUOPessoa);
+                ps.setInt(6, votarOuAssociar);
+                ps.setString(7, agora);
 
                 ps.executeUpdate();
                 conexao.commit();
@@ -911,16 +1248,17 @@ public class Main {
             }
 
             query = "INSERT INTO MESA_VOTO_PESSOA(Mesa_VotoUONome, Mesa_VotoID, PessoaNumCC, PessoaUnidadeOrganicaNome, votarOuAssociar, dataVoto)"
-                    + "VALUES ((SELECT UONome FROM MESA_VOTO WHERE UONome = ? ), (SELECT ID FROM MESA_VOTO WHERE ID = ? ), (SELECT NumCC FROM PESSOA WHERE NumCC = ? ), (SELECT Nome FROM UNIDADEORGANICA WHERE Nome = ? ), ? , TO_TIMESTAMP(?, 'YYYY/MM/DD HH24:MI:SS'))";
+                    + "VALUES ((SELECT UONome FROM MESA_VOTO WHERE UONome = ? and ID = ? ), (SELECT ID FROM MESA_VOTO WHERE ID = ? ), (SELECT NumCC FROM PESSOA WHERE NumCC = ? ), (SELECT Nome FROM UNIDADEORGANICA WHERE Nome = ? ), ? , TO_TIMESTAMP(?, 'YYYY/MM/DD HH24:MI:SS'))";
 
             int votarOuAssociar = 1; // 1 - Votar, 2 - Associar
             try(PreparedStatement ps = conexao.prepareStatement(query)) {
                 ps.setString(1, nomeUOMesa);
                 ps.setInt(2, idMesa);
-                ps.setInt(3, numCC);
-                ps.setString(4, nomeUOPessoa);
-                ps.setInt(5, votarOuAssociar);
-                ps.setString(6, agora);
+                ps.setInt(3, idMesa);
+                ps.setInt(4, numCC);
+                ps.setString(5, nomeUOPessoa);
+                ps.setInt(6, votarOuAssociar);
+                ps.setString(7, agora);
 
                 ps.executeUpdate();
                 conexao.commit();
