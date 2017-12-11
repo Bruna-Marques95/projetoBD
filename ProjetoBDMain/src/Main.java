@@ -4,9 +4,9 @@ import java.util.*;
 public class Main {
     public static void main(String[] args) {
         // Chamar menu da consola de administração:
-        //menuConsola();
+        menuConsola();
         // Chamar menu da mesa de voto
-        menuMesa();
+        //menuMesa();
     }
 
     /*Função de menu: Função aproveitada da meta 1 do projeto de SD*/
@@ -16,17 +16,16 @@ public class Main {
         System.out.println("============== MENU : CONSOLA DE ADMINISTRAÇÃO ==============");
         System.out.println("1 - Registar pessoa");
         System.out.println("2 - Gerir faculdades e departamentos");
-        System.out.println("3 - Criar eleicao");
-        System.out.println("4 - Gerir listas de candidatos a uma eleicao");
-        System.out.println("5 - Gerir mesas de voto");
-        System.out.println("6 - Alterar propriedades de uma eleicao");
-        System.out.println("7 - Consultar detalhes de eleições passadas");
-        System.out.println("8 - Votar antecipadamente");
-        System.out.println("9 - Alterar dados pessoais");
-        System.out.println("10 - Gerir membros de cada mesa de voto");
-        System.out.println("11 - Sair da aplicação");
+        System.out.println("3 - Criar eleição");
+        System.out.println("4 - Gerir mesas de voto");
+        System.out.println("5 - Alterar propriedades de uma eleição");
+        System.out.println("6 - Consultar detalhes de eleições passadas");
+        System.out.println("7 - Votar antecipadamente");
+        System.out.println("8 - Alterar dados pessoais");
+        System.out.println("9 - Gerir membros de cada mesa de voto");
+        System.out.println("10 - Sair da aplicação");
 
-        while (!opcao.equalsIgnoreCase("1") && !opcao.equalsIgnoreCase("2") && !opcao.equalsIgnoreCase("3") && !opcao.equalsIgnoreCase("4") && !opcao.equalsIgnoreCase("5") && !opcao.equalsIgnoreCase("6") && !opcao.equalsIgnoreCase("7") && !opcao.equalsIgnoreCase("8") && !opcao.equalsIgnoreCase("9") && !opcao.equalsIgnoreCase("10") && !opcao.equalsIgnoreCase("11")) {
+        while (!opcao.equalsIgnoreCase("1") && !opcao.equalsIgnoreCase("2") && !opcao.equalsIgnoreCase("3") && !opcao.equalsIgnoreCase("4") && !opcao.equalsIgnoreCase("5") && !opcao.equalsIgnoreCase("6") && !opcao.equalsIgnoreCase("7") && !opcao.equalsIgnoreCase("8") && !opcao.equalsIgnoreCase("9") && !opcao.equalsIgnoreCase("10")) {
             System.out.print("Opção desejada: ");
             Scanner sc = new Scanner(System.in);
             opcao = sc.nextLine();
@@ -39,50 +38,49 @@ public class Main {
         }
         else if(opcao.equalsIgnoreCase("2")) {
             System.out.println("Chamou gerir faculdades e departamentos.\n");
-            chamarGerirDepFac();
+            System.out.println("Não é possível executar esta operação de momento.");
+            //chamarGerirDepFac();
             menuConsola();
         }
         else if(opcao.equalsIgnoreCase("3")) {
             System.out.println("Chamou criar eleicao.\n");
+            System.out.println("Não é possível executar esta operação de momento.");
             //chamarCriarEleicao();
             menuConsola();
         }
         else if(opcao.equalsIgnoreCase("4")) {
-            System.out.println("Chamou gerir listas candidatas.\n");
-            chamarGerirListas();
-            menuConsola();
-        }
-        else if(opcao.equalsIgnoreCase("5")) {
             System.out.println("Chamou gerir mesas voto.\n");
+            System.out.println("Não é possível executar esta operação de momento.");
             //chamarGerirMesasVoto();
             menuConsola();
         }
-        else if (opcao.equalsIgnoreCase("6")) {
+        else if (opcao.equalsIgnoreCase("5")) {
             System.out.println("Chamou alterar propriedades de eleicao.\n");
             chamarAlterarPropEleicao();
             menuConsola();
         }
-        else if (opcao.equalsIgnoreCase("7")) {
+        else if (opcao.equalsIgnoreCase("6")) {
             System.out.println("Chamou consultar detalhes de eleicões passadas.\n");
             chamarConsultarDetalhesDeEleicoesPassadas();
             menuConsola();
         }
-        else if (opcao.equalsIgnoreCase("8")) {
+        else if (opcao.equalsIgnoreCase("7")) {
             System.out.println("Chamou votar antecipadamente.\n");
             //chamarVotarAntecipadamente();
             menuConsola();
         }
-        else if (opcao.equalsIgnoreCase("9")) {
+        else if (opcao.equalsIgnoreCase("8")) {
             System.out.println("Chamou alterar dados pessoais.\n");
             chamarAlterarDadosPessoais();
             menuConsola();
         }
-        else if (opcao.equalsIgnoreCase("10")) {
+        else if (opcao.equalsIgnoreCase("9")) {
             System.out.println("Chamou gerir membros das mesas de voto.\n");
+            System.out.println("Não é possível executar esta operação de momento.");
             //chamarGerirMembrosMesaVoto();
             menuConsola();
         }
-        else if(opcao.equalsIgnoreCase("11")) {
+        else if(opcao.equalsIgnoreCase("10")) {
             System.out.println("Chamada para desligar a aplicação.\n");
             System.exit(0);
         }
@@ -327,7 +325,7 @@ public class Main {
             }
         }
         else {
-            System.out.println("Opcao inválida.");
+            System.out.println("Opcão inválida.");
             menuConsola();
         }
     }
@@ -346,7 +344,7 @@ public class Main {
             return false;
         }
         if (connection != null) {
-            System.out.println("Ligação feita com sucessso");
+            System.out.println("Ligação feita com sucesso");
         } else {
             System.out.println("Não conseguimos estabelecer a ligação");
         }
@@ -892,6 +890,7 @@ public class Main {
         return true;
     }
 
+    /*
     public static void chamarGerirListas(){
         String inserirOuRemoverLista;
         String idEleicao;
@@ -1016,6 +1015,7 @@ public class Main {
         }
         return 0;
     }
+    */
 
     public static void imprimeTabela(String nomeTabela){
         Connection connection=null;
@@ -1091,6 +1091,7 @@ public class Main {
         return "";
     }
 
+    /*
     public static boolean gerirListas(String opcao, String eleicaoID, String nomeLista, String tipoLista){
         Connection connection = null;
         try {
@@ -1297,6 +1298,7 @@ public class Main {
             menuConsola();
         }
     }
+    */
 
     public static String devolveUOporChave(String nomeTabela, String param, String valorParam){
         Connection connection=null;
@@ -1601,22 +1603,24 @@ public class Main {
             e.printStackTrace();
         }
         if (connection != null) {
-            System.out.println("Ligação feita com sucessso");
+            System.out.println("Ligação feita com sucesso");
         } else {
-            System.out.println("Nao conseguimos estabelecer a ligacao");
+            System.out.println("Não conseguimos estabelecer a ligação");
         }
 
-        String query = "Select DATAINCIO from ELEICAO WHERE ID =?";
-        try (PreparedStatement ps= connection.prepareStatement(query)){
-            //ps.setString(1, param);
-            //ps.setString(1, param);
-            ps.setInt(1, Integer.parseInt(valorParam));
-            ResultSet rs= ps.executeQuery();
+        String query = "Select DATAINICIO from ELEICAO WHERE ID = ?";
+
+        try (PreparedStatement ps = connection.prepareStatement(query)) {
+            int id = Integer.parseInt(valorParam);
+            ps.setInt(1, id);
+
+            ResultSet rs = ps.executeQuery();
             rs.next();
-            return rs.getString(1);
 
+            String d = rs.getString(1);
+            return d;
         }
-        catch (SQLException e){
+        catch (SQLException e) {
             System.out.println(e);
         }
         return "";
@@ -1658,21 +1662,22 @@ public class Main {
         String opcao;
         String subOpcao;
         String novoValor;
-        System.out.println("Que tipo de campo de eleição pretende alterar? (1) textuais ou (2) datas");
+
+        System.out.println("Que tipo de campo de eleição pretende alterar? (1) textuais ou (2) datas?");
         Scanner sc = new Scanner(System.in);
-        opcao=sc.nextLine();
+        opcao = sc.nextLine();
         if (opcao.equalsIgnoreCase("1")){
-            System.out.println("Deseja alterar o titulo (1) ou a descrição (2)");
-            subOpcao=sc.nextLine();
+            System.out.println("Deseja alterar (1) título  ou (2) descrição?");
+            subOpcao = sc.nextLine();
             if (subOpcao.equalsIgnoreCase("1")){
                 System.out.println("Novo título da eleição:");
                 novoValor = sc.nextLine();
                 novoValor = novoValor.toUpperCase();
-                System.out.println("Qual o id da eleição a alterar");
-                idEleicao=sc.nextLine();
+                System.out.println("ID da eleição a alterar:");
+                idEleicao = sc.nextLine();
                 try{
                     int valIdEleicao = Integer.parseInt(idEleicao);
-                    alterarPropEleicao("1","TITULO",novoValor,idEleicao);
+                    alterarPropEleicao("1","TITULO", novoValor, idEleicao);
                 }
                 catch (NumberFormatException e){
                     System.out.println(e);
@@ -1683,11 +1688,11 @@ public class Main {
                 System.out.println("Nova descrição da eleição:");
                 novoValor = sc.nextLine();
                 novoValor = novoValor.toUpperCase();
-                System.out.println("Qual o id da eleição a alterar");
-                idEleicao=sc.nextLine();
+                System.out.println("ID da eleição a alterar:");
+                idEleicao = sc.nextLine();
                 try{
                     int valIdEleicao = Integer.parseInt(idEleicao);
-                    alterarPropEleicao("1","DESCRICAO",novoValor,idEleicao);
+                    alterarPropEleicao("1","DESCRICAO", novoValor, idEleicao);
                 }
                 catch (NumberFormatException e){
                     System.out.println(e);
@@ -1700,75 +1705,81 @@ public class Main {
             }
         }
         else if (opcao.equalsIgnoreCase("2")){
-            //menuAplicacao();
-            System.out.println("Insira os dados da data de início de eleição");
-            String diaI,mesI,anoI,horasI,minutosI;
-            System.out.println("Dia da nova data");
-            diaI=sc.nextLine();
-            System.out.println("Mês da nova data");
-            mesI=sc.nextLine();
-            System.out.println("Ano da nova data");
-            anoI=sc.nextLine();
-            System.out.println("Horas da nova data");
-            horasI=sc.nextLine();
-            System.out.println("Minutos da nova data");
-            minutosI=sc.nextLine();
+            System.out.println("Não é possível executar essa operação de momento.");
+            menuConsola();
+            System.out.println("Insira os dados da nova data de início de eleição");
+            String diaI, mesI, anoI, horasI, minutosI;
+            System.out.println("Dia:");
+            diaI = sc.nextLine();
+            System.out.println("Mês:");
+            mesI = sc.nextLine();
+            System.out.println("Ano:");
+            anoI = sc.nextLine();
+            System.out.println("Horas:");
+            horasI = sc.nextLine();
+            System.out.println("Minutos:");
+            minutosI = sc.nextLine();
 
-            System.out.println("Insira os dados da data de início de eleição");
-            String diaF,mesF,anoF,horasF,minutosF;
-            System.out.println("Dia da nova data");
-            diaF=sc.nextLine();
-            System.out.println("Mês da nova data");
-            mesF=sc.nextLine();
-            System.out.println("Ano da nova data");
-            anoF=sc.nextLine();
-            System.out.println("Horas da nova data");
-            horasF=sc.nextLine();
-            System.out.println("Minutos da nova data");
-            minutosF=sc.nextLine();
-            System.out.println("Qual o id da eleição a alterar");
-            idEleicao=sc.nextLine();
+            System.out.println("Insira os dados da nova data de fim de eleição");
+            String diaF, mesF, anoF, horasF, minutosF;
+            System.out.println("Dia:");
+            diaF = sc.nextLine();
+            System.out.println("Mês:");
+            mesF = sc.nextLine();
+            System.out.println("Ano:");
+            anoF = sc.nextLine();
+            System.out.println("Horas:");
+            horasF = sc.nextLine();
+            System.out.println("Minutos:");
+            minutosF = sc.nextLine();
+
+            System.out.println("ID da eleição a alterar:");
+            idEleicao = sc.nextLine();
 
             try{
-                int diaVI,mesVI,anoVI,horasVI,minutosVI;
+                int diaVI, mesVI, anoVI, horasVI, minutosVI;
                 diaVI = Integer.parseInt(diaI);
                 mesVI = Integer.parseInt(mesI);
                 anoVI = Integer.parseInt(anoI);
                 horasVI = Integer.parseInt(horasI);
                 minutosVI = Integer.parseInt(minutosI);
                 Calendar novaDataI = Calendar.getInstance();
-                novaDataI.set(anoVI,mesVI-1,diaVI,horasVI,minutosVI);
+                novaDataI.set(anoVI,mesVI-1, diaVI, horasVI, minutosVI);
 
-                int diaVF,mesVF,anoVF,horasVF,minutosVF;
+                int diaVF, mesVF, anoVF, horasVF, minutosVF;
                 diaVF = Integer.parseInt(diaF);
                 mesVF = Integer.parseInt(mesF);
                 anoVF = Integer.parseInt(anoF);
                 horasVF = Integer.parseInt(horasF);
                 minutosVF = Integer.parseInt(minutosF);
                 Calendar novaDataF = Calendar.getInstance();
-                novaDataI.set(anoVI,mesVI-1,diaVI,horasVI,minutosVI);
+                novaDataI.set(anoVI,mesVI-1, diaVI, horasVI, minutosVI);
 
                 int valorIdEleicao = Integer.parseInt(idEleicao);
 
                 Calendar dataSistema = Calendar.getInstance();
 
-                String dataInicioEleicao = devolveData1("Eleicao","ID",idEleicao);
+                String dataInicioEleicao = devolveData1("Eleicao","ID", idEleicao);
                 String [] argsDataI = dataInicioEleicao.split(" ");
                 String [] argsDataDMA = argsDataI[0].split("-");
                 String [] argsDataDM = argsDataI[1].split(":");
-                System.out.println(argsDataDMA + " " +argsDataDM);
+                System.out.println(argsDataDMA + " " + argsDataDM);
                 Calendar cal = Calendar.getInstance();
-                cal.set(Integer.parseInt(argsDataDMA[0]),(Integer.parseInt(argsDataDMA[1]))-1, Integer.parseInt(argsDataDMA[2], Integer.parseInt(argsDataDM[0],Integer.parseInt(argsDataDM[1]))));
+                cal.set(Integer.parseInt(argsDataDMA[0]),(Integer.parseInt(argsDataDMA[1]))-1, Integer.parseInt(argsDataDMA[2], Integer.parseInt(argsDataDM[0], Integer.parseInt(argsDataDM[1]))));
                 //cal.set(Integer.parseInt(argsDataDMA[0]), Integer.parseInt(argsDataDMA[1])-1, Integer.parseInt(argsDataDMA[2], Integer.parseInt(argsDataDM[0])));
-                System.out.println(cal.get(Calendar.DAY_OF_MONTH)+":"+cal.get(Calendar.MONTH)+":"+cal.get(Calendar.YEAR)+":"+ cal.get(Calendar.HOUR_OF_DAY)+":"+cal.get(Calendar.MINUTE));
+                System.out.println(cal.get(Calendar.DAY_OF_MONTH) + ":" + cal.get(Calendar.MONTH) + ":" + cal.get(Calendar.YEAR) + ":" + cal.get(Calendar.HOUR_OF_DAY) + ":" + cal.get(Calendar.MINUTE));
 
                 if (comparaDatas2(novaDataI,novaDataF) && comparaDatas2(dataSistema,novaDataI) /*&& comparaDatas2(novaDataI,cal)*/){
-                    String strDataI=diaVI+"-"+(mesVI-1)+"-"+anoVI+" "+horasVI+":"+minutosVI;
-                    String strDataF=diaVF+"-"+(mesVF-1)+"-"+anoVF+" "+horasVF+":"+minutosVF;
-                    alterarPropEleicao("2", strDataI,strDataF,idEleicao);
+                    Data dI = new Data(diaVI, mesVI-1, anoVI, horasVI, minutosVI);
+                    String strDataI = formataData(dI);
+                    //String strDataI = anoVI + "-" + (mesVI-1) + "-" + diaVI + " " + horasVI + ":" + minutosVI;
+                    Data dF = new Data(diaVF, mesVF-1, anoVF, horasVF, minutosVF);
+                    String strDataF = formataData(dF);
+                    //String strDataF = anoVF + "-" + (mesVF-1) + "-" + diaVF + " " + horasVF + ":" + minutosVF;
+                    alterarPropEleicao("2", strDataI, strDataF, idEleicao);
                 }
                 else {
-                    System.out.println("A eleição já começou/a data de fim esta antes da data de ínicio/ a eleição não pode começar no passado");
+                    System.out.println("A eleição já começou / A data de fim está antes da data de ínício / A eleição não pode começar no passado.");
                     menuConsola();
                 }
             }
@@ -1796,49 +1807,50 @@ public class Main {
         if (connection != null) {
             System.out.println("Ligação feita com sucesso");
         } else {
-            System.out.println("Nao conseguimos estabelecer a ligacao");
+            System.out.println("Não conseguimos estabelecer a ligação");
         }
 
-        if (opcao.equalsIgnoreCase("1")){
-            if (arg1.equalsIgnoreCase("TITULO")){
+        if (opcao.equalsIgnoreCase("1")) {
+            if (arg1.equalsIgnoreCase("TITULO")) {
                 String query = "UPDATE ELEICAO SET TITULO = NLS_UPPER(?) WHERE ID = ?";
-                try (PreparedStatement ps= connection.prepareStatement(query)){
-                    //ps.setString(1, arg1);
+                try (PreparedStatement ps= connection.prepareStatement(query)) {
                     ps.setString(1, arg2);
-                    ps.setInt(2,Integer.parseInt(idEleicao));
+                    ps.setInt(2, Integer.parseInt(idEleicao));
+
                     ps.executeUpdate();
                     connection.commit();
                 }
-                catch (SQLException e){
+                catch (SQLException e) {
                     System.out.println(e);
                     menuConsola();
                 }
             }
-            if (arg1.equalsIgnoreCase("DESCRICAO")){
+            if (arg1.equalsIgnoreCase("DESCRICAO")) {
                 String query = "UPDATE ELEICAO SET DESCRICAO = NLS_UPPER(?) WHERE ID = ?";
-                try (PreparedStatement ps= connection.prepareStatement(query)){
-                    //ps.setString(1, arg1);
+                try (PreparedStatement ps= connection.prepareStatement(query)) {
                     ps.setString(1, arg2);
-                    ps.setInt(2,Integer.parseInt(idEleicao));
+                    ps.setInt(2, Integer.parseInt(idEleicao));
+
                     ps.executeUpdate();
                     connection.commit();
                 }
-                catch (SQLException e){
+                catch (SQLException e) {
                     System.out.println(e);
                     menuConsola();
                 }
             }
         }
-        else if (opcao.equalsIgnoreCase("2")){
-            String query = "UPDATE ELEICAO SET DATAINCIO = TO_DATE(?,'DD-MM-YYYY HH24:MI'), SET DATAFIM =TO_DATE(?,'DD-MM-YYYY HH24:MI') WHERE ID = ?";
-            try (PreparedStatement ps= connection.prepareStatement(query)){
+        else if (opcao.equalsIgnoreCase("2")) {
+            String query = "UPDATE ELEICAO SET DATAINICIO = TO_TIMESTAMP(?,'YYYY-MM-DD HH24:MI:SS'), SET DATAFIM = TO_TIMESTAMP(?,'YYYY-MM-DD HH24:MI:SS') WHERE ID = ?";
+            try (PreparedStatement ps = connection.prepareStatement(query)) {
                 ps.setString(1, arg1);
                 ps.setString(2, arg2);
                 ps.setInt(3,Integer.parseInt(idEleicao));
+
                 ps.executeUpdate();
                 connection.commit();
             }
-            catch (SQLException e){
+            catch (SQLException e) {
                 System.out.println(e);
                 menuConsola();
             }
@@ -1853,31 +1865,33 @@ public class Main {
         String idPessoa;
         String opcao;
         String novoValorColuna;
+
         System.out.println("Qual o id da pessoa cujos dados quer alterar:");
         Scanner sc = new Scanner(System.in);
-        idPessoa=sc.nextLine();
-        System.out.println("Qual o parâmetro que deseja mudar(insira o nome que se encontra entres parênteses):");
-        System.out.println("1- nome [NOME]");
-        System.out.println("2- nomeUtilizador [NOMEUTILIZADOR]");
-        System.out.println("3- password [PASSWORD]");
-        System.out.println("4- número de telefone [NUMTELEFONE]");
-        System.out.println("5- morada [MORADA]");
-        System.out.println("6- validade do cartão de cidadão [VALIDADECC]");
-        System.out.println("7- número do cartão de cidadão [NUMCC]");
-        System.out.println("8- unidade orgânica associada [UNIDADEORGANICANOME]");
-        System.out.println("9- tipo de pessoa [TIPO]");
+        idPessoa = sc.nextLine();
+
+        System.out.println("Qual o parâmetro que deseja mudar (insira o nome que se encontra entres parênteses):");
+        System.out.println("1 - nome [NOME]");
+        System.out.println("2 - nomeUtilizador [NOMEUTILIZADOR]");
+        System.out.println("3 - password [PASSWORD]");
+        System.out.println("4 - número de telefone [NUMTELEFONE]");
+        System.out.println("5 - morada [MORADA]");
+        System.out.println("6 - validade do cartão de cidadão [VALIDADECC]");
+        System.out.println("7 - número do cartão de cidadão [NUMCC]");
+        System.out.println("8 - unidade orgânica associada [UNIDADEORGANICANOME]");
+        System.out.println("9 - tipo de pessoa [TIPO]");
         opcao = sc.nextLine();
-        opcao=opcao.toUpperCase();
-        //|| opcao.equalsIgnoreCase("2") || opcao.equalsIgnoreCase("3") || opcao.equalsIgnoreCase("5")
+        opcao = opcao.toUpperCase();
+
         if (opcao.equalsIgnoreCase("NOME") || opcao.equalsIgnoreCase("NOMEUTILIZADOR") || opcao.equalsIgnoreCase("PASSWORD") || opcao.equalsIgnoreCase("NUMTELEFONE") || opcao.equalsIgnoreCase("MORADA") || opcao.equalsIgnoreCase("VALIDADECC") ||opcao.equalsIgnoreCase("NUMCC") || opcao.equalsIgnoreCase("UNIDADEORGANICANOME") || opcao.equalsIgnoreCase("TIPO")){
             try{
                 int valNumCC = Integer.parseInt(idPessoa);
-                System.out.println("Qual o novo valor do parâmetro selecionado[se for data: dia-mes-ano]");
+                System.out.println("Qual o novo valor do parâmetro selecionado [se for data: dia-mes-ano]");
                 novoValorColuna = sc.nextLine();
-                alterarDadosPessoais(opcao,idPessoa,novoValorColuna);
+                alterarDadosPessoais(opcao, idPessoa, novoValorColuna);
             }
             catch (NumberFormatException e ){
-                System.out.println("O id introduzido não é um número");
+                System.out.println("O id introduzido não é um número.");
                 menuConsola();
             }
         }
@@ -1888,7 +1902,7 @@ public class Main {
     }
 
     public static boolean alterarDadosPessoais(String opcao, String idPessoa, String novoValorColuna) {
-        Connection connection=null;
+        Connection connection = null;
         try {
             connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:xe",
                     "utilizadorBD",
@@ -1898,79 +1912,79 @@ public class Main {
             e.printStackTrace();
         }
         if (connection != null) {
-            System.out.println("Ligação feita com sucessso");
+            System.out.println("Ligação feita com sucesso");
         }
         else {
-            System.out.println("Nao conseguimos estabelecer a ligacao");
+            System.out.println("Não conseguimos estabelecer a ligação");
         }
 
-        if (opcao.equalsIgnoreCase("NOME")){
+        if (opcao.equalsIgnoreCase("NOME")) {
             String query = "UPDATE PESSOA SET NOME = ? WHERE NUMCC = ?";
-            try (PreparedStatement ps= connection.prepareStatement(query)){
-
+            try (PreparedStatement ps= connection.prepareStatement(query)) {
                 ps.setString(1, novoValorColuna);
-                ps.setInt(2,Integer.parseInt(idPessoa));
+                ps.setInt(2, Integer.parseInt(idPessoa));
+
                 ps.executeUpdate();
                 connection.commit();
             }
-            catch (SQLException e){
+            catch (SQLException e) {
                 System.out.println(e);
                 menuConsola();
             }
         }
-        else if (opcao.equalsIgnoreCase("NOMEUTILIZADOR")){ //|| opcao.equalsIgnoreCase("NOMEUTILIZADOR") || opcao.equalsIgnoreCase("PASSWORD") || opcao.equalsIgnoreCase("MORADA")){
+        else if (opcao.equalsIgnoreCase("NOMEUTILIZADOR")) {
             String query = "UPDATE PESSOA SET NOMEUTILIZADOR = ? WHERE NUMCC = ?";
-            try (PreparedStatement ps= connection.prepareStatement(query)){
-
+            try (PreparedStatement ps = connection.prepareStatement(query)) {
                 ps.setString(1, novoValorColuna);
-                ps.setInt(2,Integer.parseInt(idPessoa));
+                ps.setInt(2, Integer.parseInt(idPessoa));
+
                 ps.executeUpdate();
                 connection.commit();
             }
-            catch (SQLException e){
+            catch (SQLException e) {
                 System.out.println(e);
                 menuConsola();
             }
         }
-        else if (opcao.equalsIgnoreCase("PASSWORD")){ // opcao.equalsIgnoreCase("PASSWORD") || opcao.equalsIgnoreCase("MORADA")){
+        else if (opcao.equalsIgnoreCase("PASSWORD")) {
             String query = "UPDATE PESSOA SET PASSWORD = ? WHERE NUMCC = ?";
-            try (PreparedStatement ps= connection.prepareStatement(query)){
-
+            try (PreparedStatement ps = connection.prepareStatement(query)) {
                 ps.setString(1, novoValorColuna);
-                ps.setInt(2,Integer.parseInt(idPessoa));
+                ps.setInt(2, Integer.parseInt(idPessoa));
+
                 ps.executeUpdate();
                 connection.commit();
             }
-            catch (SQLException e){
+            catch (SQLException e) {
                 System.out.println(e);
                 menuConsola();
             }
         }
-        else if (opcao.equalsIgnoreCase("MORADA")){
+        else if (opcao.equalsIgnoreCase("MORADA")) {
             String query = "UPDATE PESSOA SET MORADA = ? WHERE NUMCC = ?";
-            try (PreparedStatement ps= connection.prepareStatement(query)){
-
+            try (PreparedStatement ps = connection.prepareStatement(query)){
                 ps.setString(1, novoValorColuna);
-                ps.setInt(2,Integer.parseInt(idPessoa));
+                ps.setInt(2, Integer.parseInt(idPessoa));
+
                 ps.executeUpdate();
                 connection.commit();
             }
-            catch (SQLException e){
+            catch (SQLException e) {
                 System.out.println(e);
                 menuConsola();
             }
         }
-        else if (opcao.equalsIgnoreCase("NUMTELEFONE")){
-            if(verificaTelefone(novoValorColuna)){
+        else if (opcao.equalsIgnoreCase("NUMTELEFONE")) {
+            if(verificaTelefone(novoValorColuna)) {
                 String query = "UPDATE PESSOA SET NUMTELEFONE = ? WHERE NUMCC = ?";
-                try (PreparedStatement ps= connection.prepareStatement(query)){
-                    //ps.setString(1, opcao);
+                try (PreparedStatement ps = connection.prepareStatement(query)) {
                     ps.setInt(1, Integer.parseInt(novoValorColuna));
-                    ps.setInt(2,Integer.parseInt(idPessoa));
+                    ps.setInt(2, Integer.parseInt(idPessoa));
+
                     ps.executeUpdate();
                     connection.commit();
                 }
-                catch (SQLException e){
+                catch (SQLException e) {
                     System.out.println(e);
                     menuConsola();
                 }
@@ -1981,16 +1995,16 @@ public class Main {
             }
         }
         else if(opcao.equalsIgnoreCase("TIPO")){
-            if(verificaFuncao(novoValorColuna)){
+            if(verificaFuncao(novoValorColuna)) {
                 String query = "UPDATE PESSOA SET TIPO = NLS_LOWER(?) WHERE NUMCC = ?";
-                try (PreparedStatement ps= connection.prepareStatement(query)){
-                    //ps.setString(1, opcao);
+                try (PreparedStatement ps = connection.prepareStatement(query)) {
                     ps.setString(1, novoValorColuna);
-                    ps.setInt(2,Integer.parseInt(idPessoa));
+                    ps.setInt(2, Integer.parseInt(idPessoa));
+
                     ps.executeUpdate();
                     connection.commit();
                 }
-                catch (SQLException e){
+                catch (SQLException e) {
                     System.out.println(e);
                     menuConsola();
                 }
@@ -2000,43 +2014,44 @@ public class Main {
                 menuConsola();
             }
         }
-        else if (opcao.equalsIgnoreCase("UNIDADEORGANICANOME")){
+        else if (opcao.equalsIgnoreCase("UNIDADEORGANICANOME")) {
             String query = "UPDATE PESSOA SET UNIDADEORGANICANOME = (select NOME from UNIDADEORGANICA WHERE NOME = NLS_UPPER(?)) WHERE NUMCC = ?";
-            try (PreparedStatement ps= connection.prepareStatement(query)){
-                //ps.setString(1, opcao);
+            try (PreparedStatement ps = connection.prepareStatement(query)) {
                 ps.setString(1, novoValorColuna);
-                ps.setInt(1,Integer.parseInt(idPessoa));
+                ps.setInt(1, Integer.parseInt(idPessoa));
+
                 ps.executeUpdate();
                 connection.commit();
             }
-            catch (SQLException e){
+            catch (SQLException e) {
                 System.out.println(e);
                 menuConsola();
             }
         }
-        else if (opcao.equalsIgnoreCase("NUMCC")){
+        else if (opcao.equalsIgnoreCase("NUMCC")) {
             if(verificaIDCC(novoValorColuna)){
                 String query = "UPDATE PESSOA SET NUMCC = ? WHERE NUMCC = ?";
-                try (PreparedStatement ps= connection.prepareStatement(query)){
-                    //ps.setString(1, opcao);
+                try (PreparedStatement ps = connection.prepareStatement(query)) {
                     ps.setInt(1, Integer.parseInt(novoValorColuna));
-                    ps.setInt(2,Integer.parseInt(idPessoa));
+                    ps.setInt(2, Integer.parseInt(idPessoa));
+
                     ps.executeUpdate();
                     connection.commit();
                 }
-                catch (SQLException e){
+                catch (SQLException e) {
                     System.out.println(e);
                     menuConsola();
                 }
 
                 String query2 = "UPDATE MESA_VOTO_PESSOA SET PESSOANUMCC = ? WHERE PESSOANUMCC = ?";
-                try (PreparedStatement ps= connection.prepareStatement(query)){
+                try (PreparedStatement ps = connection.prepareStatement(query)) {
                     ps.setInt(1, Integer.parseInt(idPessoa));
                     ps.setInt(2, Integer.parseInt(novoValorColuna));
+
                     ps.executeUpdate();
                     connection.commit();
                 }
-                catch (SQLException e){
+                catch (SQLException e) {
                     System.out.println(e);
                     try {
                         connection.rollback();
@@ -2047,13 +2062,14 @@ public class Main {
                 }
 
                 String query3 = "UPDATE PESSOA_LISTA SET PESSOANUMCC = ? WHERE PESSOANUMCC = ?";
-                try (PreparedStatement ps= connection.prepareStatement(query)){
+                try (PreparedStatement ps = connection.prepareStatement(query)) {
                     ps.setInt(1, Integer.parseInt(idPessoa));
                     ps.setInt(2, Integer.parseInt(novoValorColuna));
+
                     ps.executeUpdate();
                     connection.commit();
                 }
-                catch (SQLException e){
+                catch (SQLException e) {
                     System.out.println(e);
                     try {
                         connection.rollback();
@@ -2067,31 +2083,43 @@ public class Main {
                 System.out.println("Número do CC inválido.");
             }
         }
-        else if (opcao.equalsIgnoreCase("VALIDADECC")){
+        else if (opcao.equalsIgnoreCase("VALIDADECC")) {
             String dataOriginal = devolveValidadeCC(idPessoa);
-            String [] arrayData = dataOriginal.split("-");
-            int dia = Integer.parseInt(arrayData[2]);
-            int mes = Integer.parseInt(arrayData[1]);
-            int ano = Integer.parseInt(arrayData[0]);
+            //System.out.println("TESTE: data original " + dataOriginal);
+            String [] arrayDataO = dataOriginal.split("-");
+
+            int diaO = Integer.parseInt(arrayDataO[2]);
+            int mesO = Integer.parseInt(arrayDataO[1]);
+            int anoO = Integer.parseInt(arrayDataO[0]);
+
+            //System.out.println("TESTE: data nova " + novoValorColuna);
+            String [] arrayDataN = novoValorColuna.split("-");
+
+            int diaN = Integer.parseInt(arrayDataN[0]);
+            int mesN = Integer.parseInt(arrayDataN[1]);
+            int anoN = Integer.parseInt(arrayDataN[2]);
+
             Calendar DataCC = Calendar.getInstance();
+            DataCC.set(anoO, mesO, diaO);
             Calendar novaDataCC = Calendar.getInstance();
-            DataCC.set(ano, (mes-1), dia);
+            novaDataCC.set(anoN, mesN, diaN);
+
             if (validaDatas(DataCC, novaDataCC)){
                 String query = "UPDATE PESSOA SET VALIDADECC = TO_DATE(?,'DD-MM-YYYY') WHERE NUMCC = ?";
-                try (PreparedStatement ps= connection.prepareStatement(query)){
-                    //ps.setString(1, opcao);
+                try (PreparedStatement ps = connection.prepareStatement(query)) {
                     ps.setString(1, novoValorColuna);
-                    ps.setInt(2,Integer.parseInt(idPessoa));
+                    ps.setInt(2, Integer.parseInt(idPessoa));
+
                     ps.executeUpdate();
                     connection.commit();
                 }
-                catch (SQLException e){
+                catch (SQLException e) {
                     System.out.println(e);
                     menuConsola();
                 }
             }
             else {
-                System.out.println("A nova validade do cartão de cidadão termina antes da original");
+                System.out.println("A nova validade do cartão de cidadão termina antes da original.");
             }
         }
         else{
@@ -2111,27 +2139,31 @@ public class Main {
             e.printStackTrace();
         }
         if (connection != null) {
-            System.out.println("Ligação feita com sucessso");
+            System.out.println("Ligação feita com sucesso");
         } else {
-            System.out.println("Nao conseguimos estabelecer a ligacao");
+            System.out.println("Não conseguimos estabelecer a ligação");
         }
 
-        String query = "Select VALIDADECC from PESSOA WHERE NUMCC =?";
-        try (PreparedStatement ps= connection.prepareStatement(query)){
+        String query = "Select VALIDADECC from PESSOA WHERE NUMCC = ?";
+        try (PreparedStatement ps = connection.prepareStatement(query)) {
             ps.setInt(1, Integer.parseInt(idPessoa));
-            ResultSet rs= ps.executeQuery();
-            return rs.getString(1);
 
+            ResultSet rs = ps.executeQuery();
+            rs.next();
+
+            String val = rs.getDate(1).toString();
+
+            return val;
         }
-        catch (SQLException e){
+        catch (SQLException e) {
             System.out.println(e);
         }
         return "";
     }
 
     public static boolean validaDatas(Calendar dI, Calendar dF) {
-        System.out.println("DATA dI-> "+dI.get(Calendar.DAY_OF_MONTH) + ":" + (dI.get(Calendar.MONTH)) + ":" + dI.get(Calendar.YEAR));
-        System.out.println("DATA dF-> "+dF.get(Calendar.DAY_OF_MONTH) + ":" + (dF.get(Calendar.MONTH)) + ":" + dF.get(Calendar.YEAR));
+        System.out.println("DATA dI-> " + dI.get(Calendar.DAY_OF_MONTH) + ":" + (dI.get(Calendar.MONTH)) + ":" + dI.get(Calendar.YEAR));
+        System.out.println("DATA dF-> " + dF.get(Calendar.DAY_OF_MONTH) + ":" + (dF.get(Calendar.MONTH)) + ":" + dF.get(Calendar.YEAR));
         if(dI.YEAR >= dF.YEAR){
             if(dI.YEAR == dF.YEAR){
                 if(dI.MONTH >= dF.MONTH){
