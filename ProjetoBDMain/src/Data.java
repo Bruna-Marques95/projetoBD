@@ -184,6 +184,28 @@ public class Data {
         else return false;
     }
 
+    public boolean validaDatas(Data agora, Data validade) {
+        if(agora.getAno() >= validade.getAno()) {
+            if(agora.getAno() == validade.getAno()) {
+                if(agora.getMes() >= validade.getMes()) {
+                    if(agora.getMes() == validade.getMes()) {
+                        if(agora.getDia() >= validade.getDia()){
+                            if(agora.getDia() == validade.getDia()){
+                                return true;
+                            }
+                            else return false;
+                        }
+                        else return true;
+                    }
+                    else return false;
+                }
+                else return true;
+            }
+            else return false;
+        }
+        else return true;
+    }
+
     public int getDia() {
         return dia;
     }
